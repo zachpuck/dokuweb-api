@@ -1,0 +1,12 @@
+name: dropbox/list-folders
+description: lists all the folders in the dropbox path
+inputs:
+  srcDir:
+    dir:
+      description: directory for source code
+      default: .
+  dropbox_app_token:
+    string:
+      description: token used to call api
+run:
+  

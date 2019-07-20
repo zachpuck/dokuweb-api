@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/zachpuck/dokuweb-api/pkg/api"
+	"github.com/zachpuck/dokuweb-api/pkg/dropbox"
 )
 
 func main() {
 	fmt.Println("Starting Dokuforest web api")
-	api.Start()
+	dropbox.Start()
 }
