@@ -7,5 +7,8 @@ import (
 
 func main() {
 	fmt.Println("Starting Dokuforest web api")
-	dropbox.Start()
+
+	dbx := dropbox.New()
+
+	dbx.ListFolder()
 }

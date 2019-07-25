@@ -1,22 +1,2 @@
-# github.com/dropbox/dropbox-sdk-go-unofficial v5.4.0+incompatible
-github.com/dropbox/dropbox-sdk-go-unofficial/dropbox
-github.com/dropbox/dropbox-sdk-go-unofficial/dropbox/files
-github.com/dropbox/dropbox-sdk-go-unofficial/dropbox/async
-github.com/dropbox/dropbox-sdk-go-unofficial/dropbox/auth
-github.com/dropbox/dropbox-sdk-go-unofficial/dropbox/file_properties
-# github.com/golang/protobuf v1.3.1
-github.com/golang/protobuf/proto
-# golang.org/x/net v0.0.0-20190503192946-f4e77d36d62c
-golang.org/x/net/context
-golang.org/x/net/context/ctxhttp
-# golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
-golang.org/x/oauth2
-golang.org/x/oauth2/internal
-# google.golang.org/appengine v1.4.0
-google.golang.org/appengine/urlfetch
-google.golang.org/appengine/internal
-google.golang.org/appengine/internal/urlfetch
-google.golang.org/appengine/internal/base
-google.golang.org/appengine/internal/datastore
-google.golang.org/appengine/internal/log
-google.golang.org/appengine/internal/remote_api
+# github.com/pkg/errors v0.8.1
+github.com/pkg/errors

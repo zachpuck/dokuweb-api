@@ -5,8 +5,20 @@ inputs:
     dir:
       description: directory for source code
       default: .
-  dropbox_app_token:
+  DROPBOX_APP_TOKEN:
     string:
       description: token used to call api
 run:
-  
+  container:
+    image: { ref: 'golang:1.12.7-alpine' }
+    name: list-folders
+    dirs:
+      /go/src/github.com/zachpuck/dokuweb-api/: $(srcDir)
+    cmd:
+      - sh
+      - -ce
+      - |
+        go run .opspec/dropbox/list-folders/list-folders.go
+    workDir: /go/src/github.com/zachpuck/dokuweb-api
+    envVars:
+      DROPBOX_APP_TOKEN:
