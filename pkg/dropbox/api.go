@@ -51,43 +51,35 @@ func New() *DBX {
 	return dbx
 }
 
-func (d *DBX) ListFolder() {
+func (d *DBX) ListFolder() ([]Entry, error) {
 	// "https://api.dropboxapi.com/2/files/list_folder"
 
 	jsonData := map[string]string{"path": d.Path}
-	results, err := d.NewRequest(jsonData, "POST", "files/list_folder")
+	req, err := d.NewRequest(jsonData, "POST", "files/list_folder")
 	if err != nil {
 		fmt.Println("ERROR: ", err)
 	}
-	//jsonBytes, err := json.Marshal(jsonData)
-	//url := fmt.Sprintf("%s/%s", d.BaseURL, "files/list_folder")
-	//fmt.Println(url)
-	//request, _ := http.NewRequest(
-	//	"POST",
-	//	url,
-	//	bytes.NewBuffer(jsonBytes),
-	//)
-	//request.Header.Set("Content-Type", "application/json")
-	//request.Header.Set("Authorization", fmt.Sprintf("Bearer %s", d.Token))
-	//
-	//resp, err := d.Client.Do(request)
-	//if err != nil {
-	//	fmt.Println("error getting all files: ", err)
-	//}
-	//
-	//var results APIResponse
-	//decodeError := json.NewDecoder(resp.Body).Decode(&results)
-	//if decodeError != nil {
-	//	fmt.Println("ERR DECODING: ", decodeError)
-	//}
 
-	fmt.Println("RESULTS: ", results.Entries[0].Name)
+	res, err := d.Client.Do(req)
+	if err != nil {
+		return nil, errors.Wrap(err, "request failed")
+	}
+
+	var result APIResponse
+	err = json.NewDecoder(res.Body).Decode(&result)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to decode response body")
+	}
+
+	fmt.Println("RESULTS: ", result.Entries[0].Name)
+
+	return result.Entries, nil
 }
 
-func (d *DBX) NewRequest(data map[string]string, method string, apiPath string) (APIResponse, error) {
+func (d *DBX) NewRequest(data map[string]string, method string, apiPath string) (*http.Request, error) {
 	b, err := json.Marshal(data)
 	if err != nil {
-		return APIResponse{}, errors.Wrap(err, "failed to encode json")
+		return nil, errors.Wrap(err, "failed to encode json")
 	}
 
 	req, err := http.NewRequest(
@@ -96,21 +88,10 @@ func (d *DBX) NewRequest(data map[string]string, method string, apiPath string) 
 		bytes.NewBuffer(b),
 	)
 	if err != nil {
-		return APIResponse{}, errors.Wrap(err, "failed to complete request")
+		return nil, errors.Wrap(err, "failed to complete request")
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", d.Token))
 
-	res, err := d.Client.Do(req)
-	if err != nil {
-		return APIResponse{}, errors.Wrap(err, "request failed")
-	}
-
-	var result APIResponse
-	err = json.NewDecoder(res.Body).Decode(&result)
-	if err != nil {
-		return APIResponse{}, errors.Wrap(err, "failed to decode response body")
-	}
-
-	return result, nil
+	return req, nil
 }
