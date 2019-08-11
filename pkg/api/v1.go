@@ -37,11 +37,3 @@ func (h *V1Handler) handleGet(res http.ResponseWriter, req *http.Request) {
 	return
 }
 
-type ImageHandler struct {
-
-}
-
-func (h *ImageHandler) ServeHTTP(res http.ResponseWriter, req *http.Request) {
-	fmt.Fprintln(res,"not implemented")
-	return
-}
